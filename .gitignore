@@ -6,3 +6,4 @@ dist-server/
 .env.local
 .env.production
 # .env.example is intentionally committed
+tsconfig.tsbuildinfo
