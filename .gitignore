@@ -1,4 +1,8 @@
 node_modules/
 dist/
+dist-server/
 *.local
-.env*
+.env
+.env.local
+.env.production
+# .env.example is intentionally committed

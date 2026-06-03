@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigate, Link } from '@tanstack/react-router'
 import { useConfiguratorStore } from '../lib/configurator-store'
 import { TIPO_LABELS } from '../lib/pricing'
+import { api } from '../lib/api'
 
 interface FormData {
   nombre: string
@@ -40,24 +41,17 @@ export function CotizacionPage() {
     setError('')
 
     try {
-      const quote = {
-        id: crypto.randomUUID(),
-        createdAt: new Date().toISOString(),
+      await api.submitQuote({
         tipo,
         config,
         estimatedPrice,
         customer: form,
         screenshot: screenshot || null,
-        status: 'pending',
-      }
-
-      const existing = JSON.parse(localStorage.getItem('mecan-quotes') || '[]')
-      localStorage.setItem('mecan-quotes', JSON.stringify([quote, ...existing]))
+      })
       localStorage.removeItem('mecan-screenshot')
-
       navigate({ to: '/cotizacion/exito' })
-    } catch {
-      setError('Error al guardar la cotización. Intentá de nuevo.')
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Error al enviar la cotización. Intentá de nuevo.')
     } finally {
       setLoading(false)
     }
