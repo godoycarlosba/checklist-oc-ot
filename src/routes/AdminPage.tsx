@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import { Link } from '@tanstack/react-router'
 import { TIPO_LABELS } from '../lib/pricing'
-import { api } from '../lib/api'
+import { api, isDemoMode, DEMO_ADMIN_KEY, onDemoModeChange } from '../lib/api'
 import type { QuoteRecord } from '../lib/api'
 import type { Tipo } from '../lib/pricing'
 
@@ -22,6 +22,14 @@ function LoginOverlay({ onAuth }: { onAuth: (key: string) => void }) {
   const [key, setKey] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const [demo, setDemo] = useState(isDemoMode())
+
+  useEffect(() => {
+    const unsub = onDemoModeChange(setDemo)
+    // Auto-login in demo mode
+    if (isDemoMode()) onAuth(DEMO_ADMIN_KEY)
+    return unsub
+  }, [onAuth])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -47,16 +55,23 @@ function LoginOverlay({ onAuth }: { onAuth: (key: string) => void }) {
       <div className="card" style={{ width: 360, textAlign: 'center' }}>
         <div style={{ fontSize: 40, marginBottom: 16 }}>🔐</div>
         <h2 style={{ fontSize: 22, color: 'var(--beige)', marginBottom: 8 }}>Panel admin</h2>
-        <p style={{ fontSize: 14, color: 'var(--gray-light)', marginBottom: 24 }}>
+        <p style={{ fontSize: 14, color: 'var(--gray-light)', marginBottom: demo ? 12 : 24 }}>
           Ingresá la clave de administrador (ADMIN_SECRET en .env)
         </p>
+        {demo && (
+          <div style={{ background: 'rgba(200,148,74,0.1)', border: '1px solid rgba(200,148,74,0.3)', borderRadius: 8, padding: '10px 14px', marginBottom: 16 }}>
+            <p style={{ fontSize: 12, color: '#c8944a', margin: 0 }}>
+              🧪 Modo demo activo — cargando datos locales…
+            </p>
+          </div>
+        )}
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
           <input
             type="password"
             className="form-input"
             value={key}
             onChange={(e) => setKey(e.target.value)}
-            placeholder="Clave de admin"
+            placeholder={demo ? 'demo (modo local)' : 'Clave de admin'}
             autoFocus
           />
           {error && <p style={{ color: '#e05252', fontSize: 13 }}>{error}</p>}
@@ -75,7 +90,7 @@ function LoginOverlay({ onAuth }: { onAuth: (key: string) => void }) {
 // ─── Main admin page ─────────────────────────────────────
 export function AdminPage() {
   const [adminKey, setAdminKey] = useState<string | null>(
-    () => sessionStorage.getItem('mecan-admin-key')
+    () => isDemoMode() ? DEMO_ADMIN_KEY : sessionStorage.getItem('mecan-admin-key')
   )
   const [quotes, setQuotes] = useState<QuoteRecord[]>([])
   const [selected, setSelected] = useState<QuoteRecord | null>(null)
