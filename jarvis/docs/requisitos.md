@@ -8,14 +8,17 @@
 
 | Dato | Valor | Estado |
 |---|---|---|
-| Celular | Android | Confirmado |
+| Celular | Xiaomi Redmi Note 13 (Android / HyperOS) | Confirmado |
 | Ciudad | Buenos Aires (lat -34.61, lon -58.38) | Confirmado |
 | Zona horaria | America/Argentina/Buenos_Aires (UTC-3, sin horario de verano) | Confirmado |
 | Despertar lunes a viernes | 06:30 | Confirmado |
 | Despertar fin de semana | **A definir** (se asume 06:30) | Pendiente |
 | Agenda | Google Calendar | Confirmado |
-| PC / reloj / tablet | **A definir** | Pendiente |
-| Canal de chat | Telegram (multi-dispositivo) | Propuesto |
+| Notebook | Sí, pero se apaga → **no sirve como host** | Confirmado |
+| Reloj / tablet | **A definir** | Pendiente |
+| Plan Claude | Pro (incluye Claude Code) | Confirmado |
+| Host 24/7 | VPS Linux (~USD 5–6/mes) | Propuesto |
+| Canal de chat | Telegram vía **Claude Code Channels** (plugin oficial) | Propuesto |
 
 ## 2. Requisitos funcionales
 
@@ -37,7 +40,9 @@
 | RNF-02 | Disponible en Android, PC (Telegram Desktop/Web) y reloj (notificaciones de Telegram). |
 | RNF-03 | Si falla el clima o el Calendar, el resumen se envía igual con la parte que sí funcionó, y avisa qué falló. |
 | RNF-04 | Credenciales (Google, Telegram, Claude) guardadas solo como secretos del servidor, nunca en el repo. |
-| RNF-05 | Costo mensual objetivo: menos de USD 40. |
+| RNF-05 | Costo mensual objetivo: VPS (~USD 6) + plan Pro existente. Sin API paga aparte. |
+| RNF-07 | Xiaomi/HyperOS: Telegram y Tasker con **autoinicio activado** y **sin restricción de batería**, si no el sistema los mata. |
+| RNF-08 | Contexto persistente en `CLAUDE.md` (reglas de asesor, 3 frentes, AESA, Módulos), porque la sesión no guarda memoria entre reinicios. |
 | RNF-06 | Solo el usuario puede hablar con el bot (lista blanca por ID de Telegram). |
 
 ## 4. Fuentes de datos
@@ -47,13 +52,14 @@
 | Open-Meteo | Clima actual y pronóstico diario/horario | Gratis, sin clave | Sí (probado 2026-11-25) |
 | Google Calendar API | Leer eventos de 3 calendarios | Gratis | Pendiente OAuth |
 | Telegram Bot API | Canal de chat y notificaciones | Gratis | Pendiente crear bot |
-| Claude API | Redacción del resumen y preguntas en lenguaje natural | Pago por uso | Pendiente clave |
+| Claude Code (plan Pro) + Channels | Interacción por Telegram y resumen diario | Incluido en Pro (con límites de uso) | Pendiente configurar |
 
 ## 5. Acción previa del usuario (bloqueante para la Fase 3)
 
 1. En Google Calendar, crear 3 calendarios: **Personal**, **AESA** y **Módulos**, y mover los eventos existentes al que corresponda.
 2. Instalar Telegram en el Android y en la PC.
-3. Instalar **Tasker** (o usar Rutinas de Google) en el Android para el RF-01.
+3. Instalar **Tasker** en el Xiaomi para el RF-01, y en Ajustes → Apps darle a Telegram y Tasker *Autoinicio* y *Ahorro de batería: Sin restricciones*.
+4. Contratar un VPS (o aprobar que lo elijamos en la Fase 2).
 
 ## 6. Ejemplo de resumen (a aprobar)
 
