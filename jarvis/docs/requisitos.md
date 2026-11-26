@@ -1,6 +1,6 @@
 # Jarvis — Fase 1: Requisitos (Entrega 1)
 
-> Estado: **BORRADOR — pendiente de aprobación del usuario**
+> Estado: **APROBADO** (2026-11-26)
 > Alcance de la Entrega 1: despertador + clima + agenda diaria.
 > Nota: carpeta temporal dentro de `checklist-oc-ot`. Migrar a repo propio `jarvis` antes de la Entrega 3.
 
@@ -12,7 +12,7 @@
 | Ciudad | Buenos Aires (lat -34.61, lon -58.38) | Confirmado |
 | Zona horaria | America/Argentina/Buenos_Aires (UTC-3, sin horario de verano) | Confirmado |
 | Despertar lunes a viernes | 06:30 | Confirmado |
-| Despertar fin de semana | **A definir** (se asume 06:30) | Pendiente |
+| Despertar fin de semana | 08:00 | Confirmado |
 | Agenda | Google Calendar | Confirmado |
 | Notebook | Sí, pero se apaga → **no sirve como host** | Confirmado |
 | Reloj / tablet | **A definir** | Pendiente |
@@ -27,7 +27,7 @@
 | RF-01 | A las 06:30 suena una alarma en el Android. Al apagarla, el celular lee en voz alta el resumen del día. | Alta |
 | RF-02 | El resumen incluye la temperatura actual, la sensación térmica, la mínima y la máxima, y la probabilidad de lluvia con hora pico. | Alta |
 | RF-03 | El resumen incluye la agenda del día separada por frente: **Personal / AESA / Módulos**. | Alta |
-| RF-04 | El mismo resumen llega por Telegram a las 06:25, para que esté listo cuando suena la alarma. | Alta |
+| RF-04 | El mismo resumen llega por Telegram 5 min antes de la alarma (06:25 lun–vie, 07:55 sáb–dom). | Alta |
 | RF-05 | Desde Telegram se puede preguntar "¿qué tengo hoy/mañana/el jueves?", con filtro opcional por frente. | Media |
 | RF-06 | Aviso por Telegram 30 minutos antes de cada evento. | Media |
 | RF-07 | Si hay más de 60 % de probabilidad de lluvia, el resumen lo destaca ("llevá paraguas / revisar tareas a la intemperie en obra"). | Baja |
@@ -71,6 +71,6 @@
 
 ## 7. Criterio de salida de la Fase 1
 
-- [ ] Datos pendientes completados (fin de semana, otros dispositivos).
-- [ ] Formato del resumen (sección 6) aprobado o corregido.
+- [x] Datos pendientes completados (reloj/tablet: no aplica en Entrega 1).
+- [x] Formato del resumen (sección 6) aprobado.
 - [ ] Acciones previas de la sección 5 hechas o agendadas.
